@@ -39,24 +39,34 @@ async function signupFormHandler(event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        //create banner for success or error
-        let signupElement = document.querySelector('.signup-form')
-        let successBanner = document.createElement('div')
-        successBanner.classList.add('notification')
-        successBanner.classList.add('is-light')
-        successBanner.classList.add('mt-4')
-
         if (createUserResponse.ok) {
-            successBanner.classList.add('is-success')
-            successBanner.textContent = "Signup successful! Please login."
-            signupElement.appendChild(successBanner)
+            //if user was created, then log new user in and reditrect to home page
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                document.location.replace('/dashboard');
+                console.log("logged in");
+            } else {
+                console.log(response.statusText);
+            }
         } else {
-            console.log(createUserResponse.statusText);
             const createdUserError = await createUserResponse.json();
-            console.log(createdUserError)
-            successBanner.classList.add('is-danger')
-            successBanner.textContent = "Error signing up: " + createdUserError.errors[0].message
-            signupElement.appendChild(successBanner)
+            console.log(createUserResponse.statusText);
+            // display error to user
+            let signupElement = document.querySelector('.signup-form')
+            let banner = document.createElement('div')
+            banner.classList.add('notification')
+            banner.classList.add('mt-4')
+            banner.classList.add('is-danger')            
+            banner.textContent = "Error signing up: " + createdUserError.errors[0].message
+            signupElement.appendChild(banner)
         }
     }
 }

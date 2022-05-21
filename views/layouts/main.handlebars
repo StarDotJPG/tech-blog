@@ -32,6 +32,11 @@
             </div>
 
             <div class="navbar-end">
+                {{#if loggedIn}}
+                <div class="navbar-item">
+                    Logged in as {{username}}
+                </div>
+                {{/if}}
                 <div class="navbar-item">
                     <div class="buttons">
                         {{#if loggedIn}}
