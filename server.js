@@ -6,7 +6,8 @@ const routes = require("./controllers");
 const sequelize = require("./config/connection");
 const path = require("path");
 
-const hbs = exphbs.create();
+const helpers = require('./utils/helpers');
+const hbs = exphbs.create({ helpers });
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -20,8 +21,10 @@ const sess = {
     })
 };
 
+
 const PORT = process.env.PORT || 3001;
 const app = express();
+
 
 app.use(express.static('public'));
 app.use(express.json());

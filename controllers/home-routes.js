@@ -10,13 +10,33 @@ router.get("/", async (req, res) => {
                 return
             }
             console.log("Post data: " + JSON.stringify(dbPostData))
-            const postData = dbPostData.map( (r) => ( r.toJSON() ) )
+            const postData = dbPostData.map((r) => (r.toJSON()))
             res.render("home", { postData })
         })
         .catch(err => {
             console.log(err)
             res.status(500).json(err)
         })
+})
+
+router.get("/login", async (req, res) => {
+    try {
+        res.render("login")
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+})
+
+router.get("/dashboard", async (req, res) => {
+    try {
+        res.render("dashboard")
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
 })
 
 module.exports = router;
