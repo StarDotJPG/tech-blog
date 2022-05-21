@@ -2,6 +2,7 @@ const { Post } = require("../models");
 const { User } = require("../models")
 
 const router = require("express").Router();
+const withAuth = require('../utils/auth');
 
 router.get("/", async (req, res) => {
     Post.findAll({
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
             }
             console.log("Post data: " + JSON.stringify(dbPostData))
             const postData = dbPostData.map((r) => (r.toJSON()))
-            res.render("home", { postData })
+            res.render("home", { postData, loggedIn: req.session.loggedIn })
         })
         .catch(err => {
             console.log(err)
@@ -37,9 +38,9 @@ router.get("/login", async (req, res) => {
     }
 })
 
-router.get("/dashboard", async (req, res) => {
+router.get("/dashboard", withAuth, async (req, res) => {
     try {
-        res.render("dashboard")
+        res.render("dashboard", {loggedIn: req.session.loggedIn})
     }
     catch (err) {
         console.log(err)
