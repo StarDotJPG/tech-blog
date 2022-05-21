@@ -1,5 +1,5 @@
 <section class="content">
-    <div class="container box  my-5" id="create-post-box">
+    <div class="container box my-5" id="create-post-box">
 
         <h3 class="is-size-3 has-text-weight-bold has-text-centered">Create New Post</h3>
 
@@ -10,7 +10,8 @@
             <div class="field-body">
                 <div class="field">
                     <div class="control" id="post-title-control">
-                        <input class="input" type="text" id="post-title" placeholder="e.g. Why Macs are better than PCs">
+                        <input class="input" type="text" id="post-title"
+                            placeholder="e.g. Why Macs are better than PCs">
                     </div>
                 </div>
             </div>
@@ -44,6 +45,34 @@
             </div>
         </div>
     </div>
+
+    <div class="container box my-5">
+        <h3 class="is-size-3 has-text-weight-bold has-text-centered">My Posts</h3>
+
+        {{#each postData as |post|}}
+        <div class="card mt-5">
+            <header class="card-header has-background-info">
+                <div class="block m-3">
+                    <div class="has-text-white title is-4">
+                        {{post.title}}
+                    </div>
+                    <div class="has-text-white subtitle is-7">
+                        Created by: {{post.user.username}} on: {{format_date post.createdAt}}
+                    </div>
+                </div>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p>
+                        {{post.content}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+
 </section>
 
 <script src="/assets/js/dashboard.js"></script>

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Post, User, Vote } = require('../../models');
 const sequelize = require('../../config/connection');
+const withAuth = require('../../utils/auth');
 
 
 // get all posts
@@ -20,6 +21,7 @@ router.get('/', (req, res) => {
         });
 });
 
+// get post by post ID
 router.get('/:id', (req, res) => {
     Post.findOne({
         where: {
@@ -45,11 +47,37 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+// get all posts by user ID
+router.get('/user/:id', (req, res) => {
+    Post.findAll({
+        where: {
+            user_id: req.params.id
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ]
+    })
+        .then(dbPostData => {
+            if (!dbPostData) {
+                res.status(404).json({ message: 'No post found with this id' });
+                return;
+            }
+            res.json(dbPostData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+router.post('/', withAuth, (req, res) => {
     Post.create({
         title: req.body.title,
         content: req.body.content,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
         .then(dbPostData => res.json(dbPostData))
         .catch(err => {

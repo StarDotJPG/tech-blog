@@ -27,7 +27,6 @@ async function createPostHandler(event) {
             body: JSON.stringify({
                 title: title,
                 content: content,
-                user_id: 1,
             }),
             headers: { 'Content-Type': 'application/json' }
         });

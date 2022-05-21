@@ -39,13 +39,30 @@ router.get("/login", async (req, res) => {
 })
 
 router.get("/dashboard", withAuth, async (req, res) => {
-    try {
-        res.render("dashboard", {loggedIn: req.session.loggedIn})
-    }
-    catch (err) {
-        console.log(err)
-        res.status(500).json(err)
-    }
+    Post.findAll({
+        where: [{
+            user_id: req.session.user_id
+        }],
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ]
+    })
+        .then(dbPostData => {
+            if (!dbPostData) {
+                console.log("No posts found!")
+                return
+            }
+            console.log("Post data: " + JSON.stringify(dbPostData))
+            const postData = dbPostData.map((r) => (r.toJSON()))
+            res.render("dashboard", { postData, loggedIn: req.session.loggedIn })
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json(err)
+        })
 })
 
 module.exports = router;
