@@ -1,5 +1,5 @@
 <section class="content">
-    <div class="container box  my-5">
+    <div class="container box  my-5" id="create-post-box">
 
         <h3 class="is-size-3 has-text-weight-bold has-text-centered">Create New Post</h3>
 
@@ -9,12 +9,9 @@
             </div>
             <div class="field-body">
                 <div class="field">
-                    <div class="control">
-                        <input class="input is-danger" type="text" placeholder="e.g. Why Macs are better than PCs">
+                    <div class="control" id="post-title-control">
+                        <input class="input" type="text" id="post-title" placeholder="e.g. Why Macs are better than PCs">
                     </div>
-                    <p class="help is-danger">
-                        This field is required
-                    </p>
                 </div>
             </div>
         </div>
@@ -25,12 +22,9 @@
             </div>
             <div class="field-body is-inline">
                 <div class="field">
-                    <div class="control">
-                        <textarea class="textarea is-danger" placeholder="They just are"></textarea>
+                    <div class="control" id="post-content-control">
+                        <textarea class="textarea" id="post-content" placeholder="e.g. They just are..."></textarea>
                     </div>
-                    <p class="help is-danger">
-                        This field is required
-                    </p>
                 </div>
             </div>
         </div>
@@ -42,7 +36,7 @@
             <div class="field-body">
                 <div class="field">
                     <div class="control has-text-centered">
-                        <button class="button is-primary">
+                        <button class="button is-primary" id="create-post-btn">
                             Create Post
                         </button>
                     </div>
@@ -50,5 +44,6 @@
             </div>
         </div>
     </div>
-
 </section>
+
+<script src="/assets/js/dashboard.js"></script>

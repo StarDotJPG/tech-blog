@@ -1,9 +1,17 @@
 const { Post } = require("../models");
+const { User } = require("../models")
 
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
-    Post.findAll({})
+    Post.findAll({
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ]
+    })
         .then(dbPostData => {
             if (!dbPostData) {
                 console.log("No posts found!")
