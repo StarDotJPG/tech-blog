@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { Post, User, Vote } = require('../../models');
-const sequelize = require('../../config/connection');
+const { Post, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 
@@ -86,7 +85,7 @@ router.post('/', withAuth, (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
             title: req.body.title
