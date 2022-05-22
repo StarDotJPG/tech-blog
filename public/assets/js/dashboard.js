@@ -31,24 +31,22 @@ async function createPostHandler(event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        //create banner for success or error
-        let signupElement = document.querySelector('#create-post-box')
-        let successBanner = document.createElement('div')
-        successBanner.classList.add('notification')
-        successBanner.classList.add('is-light')
-        successBanner.classList.add('mt-4')
-
         if (createPostResponse.ok) {
-            successBanner.classList.add('is-success')
-            successBanner.textContent = "Post created successfully! Go to the home page to see your new post."
-            signupElement.appendChild(successBanner)
+            // update the dashboard
+            document.location.replace('/dashboard');
         } else {
             console.log(createPostResponse.statusText);
             const createdUserError = await createPostResponse.json();
             console.log(createdUserError)
-            successBanner.classList.add('is-danger')
-            successBanner.textContent = "Error creating new post: " + createdUserError.errors[0].message
-            signupElement.appendChild(successBanner)
+
+            //create banner for error
+            let signupElement = document.querySelector('#create-post-box')
+            let banner = document.createElement('div')
+            banner.classList.add('notification')
+            banner.classList.add('mt-4')
+            banner.classList.add('is-danger')
+            banner.textContent = "Error creating new post: " + createdUserError.errors[0].message
+            signupElement.appendChild(banner)
         }
     }
 }

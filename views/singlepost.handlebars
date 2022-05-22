@@ -10,9 +10,23 @@
                         <div class="has-text-white subtitle is-7">
                             Created by: {{postData.user.username}} on: {{format_date postData.createdAt}}
                         </div>
-                    </div>
                 </header>
+
+                {{#if userCreatedPost}}
+                <div class="has-background-warning is-flex is-align-items-center ">
+                    <p class="is-inline mx-2 mb-0">This post was created by you. You can perform the following actions:
+                    </p>
+                    <button class="button my-2 is-success" id="edit-post-btn">
+                        Edit Post
+                    </button>
+                    <button class="button m-2 is-danger" id="delete-post-btn">
+                        Delete Post
+                    </button>
+                </div>
+                {{/if}}
+
                 <div class="card-content">
+
                     <div class="content">
                         <p>
                             {{postData.content}}
@@ -59,12 +73,13 @@
             <div class="card mt-5">
                 <div class="card-content">
                     <h3 class="is-size-3 has-text-weight-bold">Comments</h3>
-                    
-                    
-                    
+
+
+
                 </div>
             </div>
-
         </div>
     </div>
 </section>
+
+<script src="/assets/js/singlepost.js"></script>

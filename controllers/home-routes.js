@@ -57,7 +57,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
             }
             console.log("Post data: " + JSON.stringify(dbPostData))
             const postData = dbPostData.map((r) => (r.toJSON()))
-            res.render("dashboard", { postData, loggedIn: req.session.loggedIn })
+            res.render("dashboard", { postData, loggedIn: req.session.loggedIn, username: req.session.username })
         })
         .catch(err => {
             console.log(err)
@@ -84,7 +84,11 @@ router.get("/singlepost/:id", withAuth, async (req, res) => {
             }
             console.log("Post data: " + JSON.stringify(dbPostData))
             const postData = dbPostData.toJSON()
-            res.render("singlepost", { postData, loggedIn: req.session.loggedIn })
+            let userCreatedPost = false;
+            if (dbPostData.user_id === req.session.user_id) {
+                userCreatedPost = true
+            }
+            res.render("singlepost", { postData, loggedIn: req.session.loggedIn, username: req.session.username, userCreatedPost })
         })
         .catch(err => {
             console.log(err)
