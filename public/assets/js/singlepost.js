@@ -116,6 +116,10 @@ async function saveEditHandler() {
   }
 }
 
+if (document.querySelector('#edit-post-btn')) {
+  document.querySelector('#edit-post-btn').addEventListener('click', editPostHandler);
+}
 
-document.querySelector('#edit-post-btn').addEventListener('click', editPostHandler);
-document.querySelector('#delete-post-btn').addEventListener('click', deletePostHandler);
+if (document.querySelector('#edit-post-btn')) {
+  document.querySelector('#delete-post-btn').addEventListener('click', deletePostHandler);
+}
