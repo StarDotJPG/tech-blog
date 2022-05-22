@@ -1,8 +1,9 @@
-const { Post } = require("../models");
+const { Post } = require("../models")
 const { User } = require("../models")
+const { Comment } = require("../models")
 
-const router = require("express").Router();
-const withAuth = require('../utils/auth');
+const router = require("express").Router()
+const withAuth = require('../utils/auth')
 
 router.get("/", async (req, res) => {
     Post.findAll({
@@ -74,6 +75,15 @@ router.get("/singlepost/:id", withAuth, async (req, res) => {
             {
                 model: User,
                 attributes: ['username']
+            },
+            {
+                model: Comment,
+                include: [
+                    {
+                        model: User,
+                        attributes: ['username']
+                    }
+                ]
             }
         ]
     })
@@ -96,4 +106,4 @@ router.get("/singlepost/:id", withAuth, async (req, res) => {
         })
 })
 
-module.exports = router;
+module.exports = router

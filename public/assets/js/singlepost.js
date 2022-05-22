@@ -9,9 +9,9 @@ async function deletePostHandler() {
     }
   })
   if (response.ok) {
-    document.location.replace('/dashboard');
+    document.location.replace('/dashboard')
   } else {
-    console.log(response.statusText);
+    console.log(response.statusText)
   }
 }
 
@@ -20,7 +20,7 @@ async function editPostHandler() {
 
   let contentEl = document.getElementById("post-content")
 
-  //disable the edit button so we don't get multiple edit boxes
+  //disable the edit button so user can't create multiple edit boxes
   document.getElementById('edit-post-btn').setAttribute("Disabled", true)
 
   //get current post content
@@ -77,8 +77,8 @@ async function editPostHandler() {
   contentEl.appendChild(cancelButtonEl)
 
   //add event listeners for buttons
-  document.querySelector('#save-edit-btn').addEventListener('click', saveEditHandler);
-  document.querySelector('#cancel-edit-btn').addEventListener('click', cancelEditHandler);
+  document.querySelector('#save-edit-btn').addEventListener('click', saveEditHandler)
+  document.querySelector('#cancel-edit-btn').addEventListener('click', cancelEditHandler)
 
 }
 
@@ -110,16 +110,39 @@ async function saveEditHandler() {
     }
   })
   if (response.ok) {
-    document.location.replace(document.location);
+    document.location.replace(document.location)
   } else {
-    console.log(response.statusText);
+    console.log(response.statusText)
+  }
+}
+
+async function createCommentHandler() {
+  let comment = document.getElementById('comment-textarea').value
+  let pathname = document.location.pathname;
+  postId = pathname.split("/")[2]
+  const response = await fetch(`/api/comments/`, {
+    method: 'POST',
+    body: JSON.stringify({
+      comment: comment,
+      post_id: postId
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  if (response.ok) {
+    document.location.replace(document.location)
+  } else {
+    console.log(response.statusText)
   }
 }
 
 if (document.querySelector('#edit-post-btn')) {
-  document.querySelector('#edit-post-btn').addEventListener('click', editPostHandler);
+  document.querySelector('#edit-post-btn').addEventListener('click', editPostHandler)
 }
 
 if (document.querySelector('#edit-post-btn')) {
-  document.querySelector('#delete-post-btn').addEventListener('click', deletePostHandler);
+  document.querySelector('#delete-post-btn').addEventListener('click', deletePostHandler)
 }
+
+document.querySelector('#create-comment-btn').addEventListener('click', createCommentHandler)
