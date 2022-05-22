@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Post, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-
 // get all posts
 router.get('/', (req, res) => {
     Post.findAll({
@@ -88,7 +87,7 @@ router.post('/', withAuth, (req, res) => {
 router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
-            title: req.body.title
+            content: req.body.content
         },
         {
             where: {

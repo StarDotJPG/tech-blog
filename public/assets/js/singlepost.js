@@ -10,7 +10,6 @@ async function deletePostHandler() {
   })
   if (response.ok) {
     document.location.replace('/dashboard');
-    console.log("post deleted");
   } else {
     console.log(response.statusText);
   }
@@ -52,6 +51,7 @@ async function editPostHandler() {
   childFieldEl.appendChild(controlEl)
   let textArea = document.createElement("textarea")
   textArea.classList.add("textarea")
+  textArea.setAttribute("id", "updated-content")
   textArea.textContent = currentPostContent
   controlEl.appendChild(textArea)
 
@@ -97,21 +97,23 @@ async function cancelEditHandler() {
 }
 
 async function saveEditHandler() {
-
-  // let pathname = document.location.pathname;
-  // postId = pathname.split("/")[2]
-  // const response = await fetch(`/api/posts/` + postId, {
-  //   method: 'DELETE',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // })
-  // if (response.ok) {
-  //   document.location.replace('/dashboard');
-  //   console.log("post deleted");
-  // } else {
-  //   console.log(response.statusText);
-  // }
+  let content = document.getElementById('updated-content').value
+  let pathname = document.location.pathname;
+  postId = pathname.split("/")[2]
+  const response = await fetch(`/api/posts/` + postId, {
+    method: 'PUT',
+    body: JSON.stringify({
+      content: content,
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  if (response.ok) {
+    document.location.replace(document.location);
+  } else {
+    console.log(response.statusText);
+  }
 }
 
 
